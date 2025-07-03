@@ -1,10 +1,6 @@
 package com.example.usermanagementapi.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table (name = "users")
@@ -17,29 +13,6 @@ public class User {
     private String name;
     private String email;
 
-    @Column(name = "created_at", updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Column(name="updated_at")
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
     // Constructors
     public User() {}
 
