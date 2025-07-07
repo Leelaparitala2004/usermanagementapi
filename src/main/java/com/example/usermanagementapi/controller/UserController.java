@@ -1,5 +1,6 @@
 package com.example.usermanagementapi.controller;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.example.usermanagementapi.model.User;
 import com.example.usermanagementapi.repository.UserRepository;
 import jakarta.validation.Valid;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +24,11 @@ public class UserController {
 
     // CREATE user
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        logger.info("Creating new user: {}", user.getName());
-        User savedUser = userRepository.save(user);
+    public ResponseEntity<List<User>> createUser(@Valid @RequestBody List<User> user) {
+        List<User> savedUser = userRepository.saveAll(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
+
 
     // READ all users
     @GetMapping
@@ -63,6 +63,11 @@ public class UserController {
             logger.warn("User with ID {} not found for update", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         });
+    }
+    @GetMapping("/page")
+    public Page<User> getUsers(Pageable pageable){
+        return userRepository.findAll(pageable);
+
     }
 
     // DELETE user
